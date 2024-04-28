@@ -1,5 +1,5 @@
 const inquirer = require('inquirer');
-const Shapes = require('./lib/shapes');
+const { Circle, Triangle, Square } = require('./lib/shapes');
 const fs = require('fs');
 
 inquirer.prompt([
@@ -33,9 +33,14 @@ inquirer.prompt([
     },
 ])
 .then((answers) => {
-    fs.writeFile('logo.svg', answers);
-})
-.then((answers) => {
-    console.log('Generated logo.svg');
-}
-)
+    if (answers.shape == 'circle') {
+        const logo = new Circle(answers.text, answers.textColor, answers.shapeColor);
+        logo.createSVG();
+    } else if (answers.shape == 'triangle') {
+        const logo = new Triangle(answers.text, answers.textColor, answers.shapeColor);
+        logo.createSVG();
+    } else if (answers.shape == 'square') {
+        const logo = new Square(answers.text, answers.textColor, answers.shapeColor);
+        logo.createSVG();
+    }
+});
